@@ -82,7 +82,7 @@ public class PutTest extends AbstractTest {
         Map getData = parseResponseDataIntoMap(responseGet.asString().replaceAll(regexp, ""));
 
         assertThat(getData.get(ID)).isEqualTo(id);
-        assertThat(getData.get(FIRSTNAME)).isEqualTo("");
+        assertThat(getData.get(FIRSTNAME)).isEqualTo(initFirstName);
         assertThat(getData.get(LASTNAME)).isEqualTo(updLastName);
     }
 

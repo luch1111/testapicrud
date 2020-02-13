@@ -1,1 +1,2 @@
-# testapicrud
+#run tests
+mvn clean test
