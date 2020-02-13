@@ -20,7 +20,7 @@ public class UnexpectedMethodTest extends AbstractTest {
     }
 
     @Test
-    public void putRequestToGetAllUrl() {
+    public void putRequestToBaseUrl() {
 
         given().headers(headers)
                 .when().put(url)
@@ -28,7 +28,7 @@ public class UnexpectedMethodTest extends AbstractTest {
     }
 
     @Test
-    public void deleteRequestToGetAllUrl() {
+    public void deleteRequestToBaseUrl() {
 
         delete(url).then().log().ifValidationFails().statusCode(405);
     }
