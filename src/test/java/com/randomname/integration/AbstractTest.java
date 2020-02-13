@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static junit.framework.TestCase.fail;
+
 public class AbstractTest {
 
     static String ID = "ID";
@@ -30,11 +32,19 @@ public class AbstractTest {
     }
 
     Map<Object, Object> parseResponseDataIntoMap(String str) {
+        Map<Object, Object> result = null;
         String[][] data = Stream.of(str.split(","))
-                .map(elem -> elem.trim().split("="))
+                .map(elem -> elem.trim().split("=", 2))
                 .toArray(String[][]::new);
 
-        return ArrayUtils.toMap(data);
+        try {
+            result = ArrayUtils.toMap(data);
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("not expected response data: " + str);
+        }
+
+        return result;
     }
 
     HashMap<String, String> buildHeaders(String fn, String ln) {

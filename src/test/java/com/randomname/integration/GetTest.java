@@ -1,8 +1,6 @@
 package com.randomname.integration;
 
 import io.restassured.response.Response;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -63,7 +61,7 @@ public class GetTest extends AbstractTest {
 
         Response responseGet = get(url);
         responseGet.then().log().ifValidationFails().statusCode(200);
-        String[] results = responseGet.asString().replaceAll(regexp,"").split("\\}, \\{");
+        String[] results = responseGet.asString().replaceAll(regexp, "").split("\\}, \\{");
 
         assertThat(results.length).isGreaterThanOrEqualTo(2);
     }
