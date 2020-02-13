@@ -1,7 +1,10 @@
 package com.randomname.integration;
 
 import io.restassured.response.Response;
+import junitparams.JUnitParamsRunner;
+import junitparams.Parameters;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,13 +12,13 @@ import java.util.Map;
 import static io.restassured.RestAssured.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JUnitParamsRunner.class)
 public class PostTest extends AbstractTest {
 
     @Test
-    public void postUserWithFirstAndLastName() {
+    @Parameters(method = "userParams")
+    public void postUserWithFirstAndLastName(String firstName, String lastName) {
 
-        String firstName = "test";
-        String lastName = "user";
         HashMap<String, String> headers = buildHeaders(firstName, lastName);
         Response responsePost = given().headers(headers).when().post(url);
         responsePost.then().log().ifValidationFails().statusCode(200);
@@ -33,6 +36,15 @@ public class PostTest extends AbstractTest {
         assertThat(getData.get(ID)).isEqualTo(id);
         assertThat(getData.get(FIRSTNAME)).isEqualTo(firstName);
         assertThat(getData.get(LASTNAME)).isEqualTo(lastName);
+    }
+
+    @SuppressWarnings("val")
+    private static Object[][] userParams() {
+        return new Object[][]{
+                {"test", "user"},
+                {"test", "o'briens"},
+                {"double name", "user"}
+        };
     }
 
     @Test
