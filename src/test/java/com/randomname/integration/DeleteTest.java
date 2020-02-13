@@ -27,15 +27,15 @@ public class DeleteTest extends AbstractTest {
         String existentUser;
 
         //setup: add user and get his ID
-        Response responsePost = given().headers(headers).when().post(url);
+        Response responsePost = given().headers(headers).when().post(baseUrl);
 
         Map postData = parseResponseDataIntoMap(responsePost.asString().replaceAll(regexp, ""));
         existentUser = (String) postData.get("ID");
 
         //test
-        delete(url + existentUser).then().log().ifValidationFails().statusCode(200);
+        delete(baseUrl + existentUser).then().log().ifValidationFails().statusCode(200);
 
-        Response responseGet = get(url + existentUser);
+        Response responseGet = get(baseUrl + existentUser);
         assertThat(responseGet.asString()).isEqualTo("[]");
     }
 
@@ -43,19 +43,19 @@ public class DeleteTest extends AbstractTest {
     public void deleteNonexistentUser() {
 
         //setup: insert user
-        given().headers(headers).when().post(url);
+        given().headers(headers).when().post(baseUrl);
 
-        Response getAllBefore = get(url);
+        Response getAllBefore = get(baseUrl);
 
         //test
-        delete(url + nonexistUser).then().log().ifValidationFails().statusCode(200);
-        Response getAllAfter = get(url);
+        delete(baseUrl + nonexistUser).then().log().ifValidationFails().statusCode(200);
+        Response getAllAfter = get(baseUrl);
 
         assertThat(getAllAfter.asString()).isEqualTo(getAllBefore.asString());
     }
 
     @Test
     public void deleteUserWithAlphabeticalId() {
-        delete(url + "test").then().log().ifValidationFails().statusCode(200);
+        delete(baseUrl + "test").then().log().ifValidationFails().statusCode(200);
     }
 }

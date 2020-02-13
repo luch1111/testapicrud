@@ -24,17 +24,17 @@ public class PutTest extends AbstractTest {
         HashMap<String, String> updHeaders = buildHeaders(updFirstName, updLastName);
 
         //setup: add new user
-        Response responsePost = given().headers(initHeaders).when().post(url);
+        Response responsePost = given().headers(initHeaders).when().post(baseUrl);
         responsePost.then().log().ifValidationFails().statusCode(200);
         Map postData = parseResponseDataIntoMap(responsePost.asString().replaceAll(regexp, ""));
         String id = (String) postData.get("ID");
 
         //test execution
         given().headers(updHeaders)
-                .when().put(url + id)
+                .when().put(baseUrl + id)
                 .then().log().ifValidationFails().statusCode(200);
 
-        Response responseGet = get(url + id);
+        Response responseGet = get(baseUrl + id);
         responseGet.then().log().ifValidationFails().statusCode(200);
 
         Map getData = parseResponseDataIntoMap(responseGet.asString().replaceAll(regexp, ""));
@@ -51,7 +51,7 @@ public class PutTest extends AbstractTest {
         HashMap<String, String> initHeaders = buildHeaders(initFirstName, initLastName);
 
         given().headers(initHeaders)
-                .when().put(url + nonexistUser)
+                .when().put(baseUrl + nonexistUser)
                 .then().log().ifValidationFails().statusCode(404);
     }
 
@@ -66,17 +66,17 @@ public class PutTest extends AbstractTest {
         HashMap<String, String> updHeaders = buildHeaders(null, updLastName);
 
         //setup: add new user
-        Response responsePost = given().headers(initHeaders).when().post(url);
+        Response responsePost = given().headers(initHeaders).when().post(baseUrl);
         responsePost.then().log().ifValidationFails().statusCode(200);
         Map postData = parseResponseDataIntoMap(responsePost.asString().replaceAll(regexp, ""));
         String id = (String) postData.get("ID");
 
         //test execution
         given().headers(updHeaders)
-                .when().put(url + id)
+                .when().put(baseUrl + id)
                 .then().log().ifValidationFails().statusCode(200);
 
-        Response responseGet = get(url + id);
+        Response responseGet = get(baseUrl + id);
         responseGet.then().log().ifValidationFails().statusCode(200);
 
         Map getData = parseResponseDataIntoMap(responseGet.asString().replaceAll(regexp, ""));

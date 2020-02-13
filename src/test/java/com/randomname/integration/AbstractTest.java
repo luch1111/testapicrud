@@ -16,7 +16,7 @@ public class AbstractTest {
     static String FIRSTNAME = "FIRSTNAME";
     static String LASTNAME = "LASTNAME";
 
-    static String url;
+    static String baseUrl;
     static String regexp;
     static String nonexistUser;
 
@@ -25,7 +25,7 @@ public class AbstractTest {
         ConfigurationReader configurationReader = new ConfigurationReader("application");
         String serviceHost = configurationReader.getConfig("service_host");
         String mainUrlPath = configurationReader.getConfig("mainUrlPath");
-        url = serviceHost + mainUrlPath;
+        baseUrl = serviceHost + mainUrlPath;
 
         nonexistUser = configurationReader.getConfig("nonexistUser");
         regexp = configurationReader.getConfig("regexp");

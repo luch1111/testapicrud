@@ -23,21 +23,21 @@ public class UnexpectedMethodTest extends AbstractTest {
     public void putRequestToBaseUrl() {
 
         given().headers(headers)
-                .when().put(url)
+                .when().put(baseUrl)
                 .then().log().ifValidationFails().statusCode(405);
     }
 
     @Test
     public void deleteRequestToBaseUrl() {
 
-        delete(url).then().log().ifValidationFails().statusCode(405);
+        delete(baseUrl).then().log().ifValidationFails().statusCode(405);
     }
 
     @Test
     public void postRequestToGetUserUrl() {
 
         given().headers(headers)
-                .when().post(url + nonexistUser)
+                .when().post(baseUrl + nonexistUser)
                 .then().log().ifValidationFails().statusCode(405);
     }
 }

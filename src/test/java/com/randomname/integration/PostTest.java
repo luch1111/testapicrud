@@ -20,7 +20,7 @@ public class PostTest extends AbstractTest {
     public void postUserWithFirstAndLastName(String firstName, String lastName) {
 
         HashMap<String, String> headers = buildHeaders(firstName, lastName);
-        Response responsePost = given().headers(headers).when().post(url);
+        Response responsePost = given().headers(headers).when().post(baseUrl);
         responsePost.then().log().ifValidationFails().statusCode(200);
 
         Map postData = parseResponseDataIntoMap(responsePost.asString().replaceAll(regexp, ""));
@@ -29,7 +29,7 @@ public class PostTest extends AbstractTest {
 
         String id = (String) postData.get("ID");
 
-        Response responseGet = get(url + id);
+        Response responseGet = get(baseUrl + id);
         responseGet.then().log().ifValidationFails().statusCode(200);
 
         Map getData = parseResponseDataIntoMap(responseGet.asString().replaceAll(regexp, ""));
@@ -52,7 +52,7 @@ public class PostTest extends AbstractTest {
         String firstName = "test";
         HashMap<String, String> headers = buildHeaders(firstName, null);
 
-        Response responsePost = given().headers(headers).when().post(url);
+        Response responsePost = given().headers(headers).when().post(baseUrl);
 
         //to clarify requirements about expected status
         responsePost.then().log().ifValidationFails().statusCode(200);
@@ -63,7 +63,7 @@ public class PostTest extends AbstractTest {
         String lastName = "test";
         HashMap<String, String> headers = buildHeaders(null, lastName);
 
-        Response responsePost = given().headers(headers).when().post(url);
+        Response responsePost = given().headers(headers).when().post(baseUrl);
 
         //to clarify requirements about expected status
         responsePost.then().log().ifValidationFails().statusCode(200);
@@ -72,7 +72,7 @@ public class PostTest extends AbstractTest {
     @Test
     public void postUserWithoutFirstAndLastNames() {
 
-        Response responsePost = post(url);
+        Response responsePost = post(baseUrl);
         responsePost.then().log().ifValidationFails().statusCode(400);
     }
 }

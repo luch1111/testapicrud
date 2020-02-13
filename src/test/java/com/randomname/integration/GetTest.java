@@ -20,12 +20,12 @@ public class GetTest extends AbstractTest {
     @Test
     public void getExistentUser() {
         //setup: insert a new user and his ID
-        Response responsePost = given().headers(headers).when().post(url);
+        Response responsePost = given().headers(headers).when().post(baseUrl);
         Map postData = parseResponseDataIntoMap(responsePost.asString().replaceAll(regexp, ""));
         String existentUser = (String) postData.get("ID");
 
         //test
-        Response responseGet = get(url + existentUser);
+        Response responseGet = get(baseUrl + existentUser);
         responseGet.then().log().ifValidationFails().statusCode(200);
 
         Map get = parseResponseDataIntoMap(responseGet.asString().replaceAll(regexp, ""));
@@ -37,7 +37,7 @@ public class GetTest extends AbstractTest {
     @Test
     public void getNonexistentUserWithNumericID() {
 
-        Response responseGet = get(url + nonexistUser);
+        Response responseGet = get(baseUrl + nonexistUser);
         responseGet.then().log().ifValidationFails().statusCode(200);
         assertThat(responseGet.asString()).isEqualTo("[]");
     }
@@ -47,7 +47,7 @@ public class GetTest extends AbstractTest {
 
         String id = "test";
 
-        Response responseGet = get(url + id);
+        Response responseGet = get(baseUrl + id);
         responseGet.then().log().ifValidationFails().statusCode(200);
         assertThat(responseGet.asString()).isEqualTo("[]");
     }
@@ -56,10 +56,10 @@ public class GetTest extends AbstractTest {
     public void getAllUsers() {
 
         //setup: insert 2 new users
-        given().headers(headers).when().post(url);
-        given().headers(headers).when().post(url);
+        given().headers(headers).when().post(baseUrl);
+        given().headers(headers).when().post(baseUrl);
 
-        Response responseGet = get(url);
+        Response responseGet = get(baseUrl);
         responseGet.then().log().ifValidationFails().statusCode(200);
         String[] results = responseGet.asString().replaceAll(regexp, "").split("\\}, \\{");
 
