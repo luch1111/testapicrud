@@ -21,7 +21,7 @@ public class AbstractTest {
     static String nonexistUser;
 
     @BeforeClass
-    public static void setup() {
+    public static void abstractSetup() {
         ConfigurationReader configurationReader = new ConfigurationReader("application");
         String serviceHost = configurationReader.getConfig("service_host");
         String mainUrlPath = configurationReader.getConfig("mainUrlPath");
